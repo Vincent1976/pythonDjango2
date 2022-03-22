@@ -1,0 +1,33 @@
+<!doctype html>
+<head>
+<title>{{name}}</title>
+<link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+{# 输出一个变量 #}
+<h1>{{hello}}</h1>
+{# 输出一个列表 #}
+<h2>{{view_list}}</h2>
+{# 输出一个列表的某一项 #}
+<h3>{{view_list.2}}</h3>
+{# 输出一个地址 #}
+<h4>{{views_str|safe}}</h4>
+
+{# for循环， reversed倒置列表 #}
+<p></p>
+    {% for i in view_list reversed %}
+    {{ i }}
+    {% endfor %}
+</p>
+
+<p>
+    {% for s,t in views_dict.items %}
+    {{ forloop.counter }}   {# 循环序号从1开始 #}
+    {{ forloop.counter0 }}  {# 循环序号从0开始 #}
+    {{ forloop.revcounter }}
+    {{ forloop.revcounter0 }}
+    {{ forloop.first }}
+    {{ forloop.last }}
+    {{ s }} : {{ t }}<br />
+    {% endfor %}
+</p>
+</html>
