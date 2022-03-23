@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from functools import wraps
 
 def runoob(request):
     context={}
@@ -33,4 +34,17 @@ def login(request):
             request.session['user_id']=user[0].id
             return render(request, 'index.html')
     # 如果是GET请求，就说明是用户刚开始登录，使用URL直接进入登录页面的
-    return render(request,'account/login.html')    
+    return render(request,'account/login.html')
+
+
+# 说明：这个装饰器的作用，就是在每个视图函数被调用时，都验证下有没法有登录，
+# 如果有过登录，则可以执行新的视图函数，
+# 否则没有登录则自动跳转到登录页面。
+def check_login(f):
+    @wraps(f)
+    def inner(request,*arg,**kwargs):
+        if request.session.get('is_login')=='1':
+            return f(request,*arg,**kwargs)
+        else:
+            return render(request,'account/login.html')
+    return inner
