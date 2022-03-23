@@ -1,10 +1,7 @@
-<!doctype html>
-<head>
-<title>{{name}}</title>
-<link rel="stylesheet" href="/static/css/bootstrap.css">
-</head>
-{# 输出一个变量 #}
-<h1>{{hello}}</h1>
+{%extends "layout.html" %}
+
+{% block mainbody %}
+
 {# 输出一个列表 #}
 <h2>{{view_list}}</h2>
 {# 输出一个列表的某一项 #}
@@ -30,4 +27,5 @@
     {{ s }} : {{ t }}<br />
     {% endfor %}
 </p>
-</html>
+
+{% endblock %}

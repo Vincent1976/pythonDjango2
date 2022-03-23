@@ -19,7 +19,6 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello/', views.hello),
     path('runoob/', views.runoob),
     path('index/', views.index)
 ]
