@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from functools import wraps
-from dataModel.models import User
+from dataModel.models import Employee
 
 
 def runoob(request):
@@ -37,9 +37,10 @@ def index(request):
     # return render(request,'index.html',{"students_list":students})
     # username1=request.session.get('username')
     user_id1=request.session.get('user_id')
+    print(user_id1)
     # 使用user_id去数据库中找到对应的user信息
-    userobj=User.objects.filter(id=user_id1)
-    print(userobj)
+    userobj=Employee.objects.filter(id=user_id1)
+    print(userobj[0])
     if userobj:
         return render(request,'index.html',{"user":userobj[0]})
     else:
@@ -51,8 +52,7 @@ def login(request):
         username=request.POST.get('username')
         password=request.POST.get('password')
 
-        user=User.objects.filter(username=username,password=password)   # 验证用户名和密码
-        print(user)
+        user=Employee.objects.filter(EmpId=username,Password=password)   # 验证用户名和密码
         if user:
             #登录成功
             # 1，生成特殊字符串
