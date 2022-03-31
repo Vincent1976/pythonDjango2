@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from functools import wraps
 from dataModel.models import Employee
-
+from django.contrib import auth
 
 def runoob(request):
     context={}
@@ -37,10 +37,8 @@ def index(request):
     # return render(request,'index.html',{"students_list":students})
     # username1=request.session.get('username')
     user_id1=request.session.get('user_id')
-    print(user_id1)
     # 使用user_id去数据库中找到对应的user信息
     userobj=Employee.objects.filter(id=user_id1)
-    print(userobj[0])
     if userobj:
         return render(request,'index.html',{"user":userobj[0]})
     else:
@@ -60,9 +58,15 @@ def login(request):
             # 3，在响应中,用cookies保存这个key ,(即向浏览器写一个cookie,此cookies的值即是这个key特殊字符）
             request.session['is_login']='1'  # 这个session是用于后面访问每个页面（即调用每个视图函数时要用到，即判断是否已经登录，用此判断）
             request.session['username']=username  # 这个要存储的session是用于后面，每个页面上要显示出来，登录状态的用户名用。
-            # 说明：如果需要在页面上显示出来的用户信息太多（有时还有积分，姓名，年龄等信息），所以我们可以只用session保存user_id
+            # # 说明：如果需要在页面上显示出来的用户信息太多（有时还有积分，姓名，年龄等信息），所以我们可以只用session保存user_id
             request.session['user_id']=user[0].id
+            
             return HttpResponseRedirect('/index/')
     # 如果是GET请求，就说明是用户刚开始登录，使用URL直接进入登录页面的
     return render(request,'account/login.html')
 
+
+
+def logout(request):
+    request.session.clear() # 清除所有session
+    return HttpResponseRedirect('/login/')

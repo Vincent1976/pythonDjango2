@@ -10,7 +10,8 @@
         <meta content="Themesbrand" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
-
+        <!-- Sweet Alert-->
+        <link href="{% static '/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
         <!-- Bootstrap Css -->
         <link href="{% static 'css/bootstrap.min.css' %}" id="bootstrap-style-1" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
@@ -392,7 +393,7 @@
                                 <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> <span key="t-settings">Settings</span></a>
                                 <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle mr-1"></i> <span key="t-lock-screen">锁屏</span></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">注销</span></a>
+                                <a class="dropdown-item text-danger" id="logoutButton" href="#"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">注销</span></a>
                             </div>
                         </div>
 
@@ -948,31 +949,26 @@
         <script src="{% static 'libs/metismenu/metisMenu.min.js' %}"></script>
         <script src="{% static 'libs/simplebar/simplebar.min.js' %}"></script>
         <script src="{% static 'libs/node-waves/waves.min.js' %}"></script>
-
+        <script src="{% static 'libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+        <script src="{% static 'js/pages/sweet-alerts.init.js' %}"></script>
+        <script src="{% static 'js/vincent.js' %}"></script>
         <script src="{% static 'js/app.js' %}"></script>
 
         <script>
+            $(function(){
+                $("#logoutButton").attr("onclick", "logout()")
+            })
+
             function logout(){
                 SwalConfirm(() => {
-            $.ajax({
-                type: "POST",
-                url: "../home/deleteBillData",
-                contentType: "text",
-                data: guidList,
-                success: function (data) {
-                    if (data.indexOf("error") >= 0) {
-                        errAlert(data);
-                        return;
-                    } else {
-                        succAlert(data);
-                        $('#billdt').DataTable().ajax.reload(function () {
-                            selectList();
-                        }, false);// 保存之后返回当前页
-                        $("#ckAll").prop('checked', false);
-                    }
-                }
-            })
-        }, "您确定要注销当前登录账户吗?");
+                    $.ajax({
+                        type: "GET",
+                        url: "/logout",
+                        success: function (data) {
+                            location.href = "/login";   
+                        }
+                    })
+                }, "您确定要注销当前登录账户吗?");
             }
         </script>
     </body>

@@ -81,17 +81,35 @@ WSGI_APPLICATION = 'pythonDjango.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3'
+    # },
+     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django',
         'HOST': '52.83.249.239',
         'PORT': 3306,
         'USER': 'root',
         'PASSWORD': '7rus7U5!'
-    }
+    },
+    #  'default': {
+    #     'ENGINE': 'sql_server.pyodbc',
+    #     'NAME': 'djangoPython',
+    #     'HOST': '117.186.228.14',
+    #     'PORT': '15343',
+    #     'USER': 'sa',
+    #     'PASSWORD': 'Adams2015',
+    #     'OPTIONS': {
+    #           'driver':'SQL Server Native Client 11.0',
+    #           'MARS_Connection': True,
+
+    #      },
+    # }
+
 }
+
+DATABASE_CONNECTION_POOLING = False
 
 
 # Password validation
@@ -128,9 +146,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/' # 别名 
-STATICFILES_DIRS = [ 
-    os.path.join(BASE_DIR, "statics"), 
+STATIC_URL = '/static/' # 别名
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "statics"),
 ]
 
 # Default primary key field type
